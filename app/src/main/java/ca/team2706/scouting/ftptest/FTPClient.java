@@ -18,15 +18,15 @@ public class FTPClient {
     org.apache.commons.net.ftp.FTPClient ftpClient = new org.apache.commons.net.ftp.FTPClient();
 
     // for FTP server credentials
-    String Hostname;
-    String Password;
-    String Username;
+    String hostname;
+    String password;
+    String username;
 
-    //Port for connection
-    int Port;
+    //port for connection
+    int port;
 
     //Local directory on device for files being downloaded.
-    File LocalPath;
+    File localPath;
 
     //Boolean to see if client is still syncing files
     public boolean syncing;
@@ -39,33 +39,33 @@ public class FTPClient {
 
     /**
      * Constructor without port option
-     * @param Hostname: Server IP Adress
-     * @param Username: Login Credential
-     * @param Password: Login Credential
-     * @param LocalPath: Local path for saving to the device
+     * @param hostname: Server IP Adress
+     * @param username: Login Credential
+     * @param password: Login Credential
+     * @param localPath: Local path for saving to the device
      */
-    public FTPClient(String Hostname, String Username, String Password, String LocalPath){
-        this.Hostname = Hostname;
-        this.Password = Password;
-        this.Username = Username;
-        this.LocalPath = new File(LocalPath);
-        this.Port = 21;
+    public FTPClient(String hostname, String username, String password, String localPath){
+        this.hostname = hostname;
+        this.password = password;
+        this.username = username;
+        this.localPath = new File(localPath);
+        this.port = 21;
     }
 
     /**
      * Constructor with port option
-     * @param Hostname: Server IP Adress
-     * @param Username: Login Credential
-     * @param Password: Login Credential
-     * @param LocalPath: Local path for saving to the device
-     * @param Port: Custom port connection
+     * @param hostname: Server IP Adress
+     * @param username: Login Credential
+     * @param password: Login Credential
+     * @param localPath: Local path for saving to the device
+     * @param port: Custom port connection
      */
-    public FTPClient(String Hostname, String Username, String Password, String LocalPath, int Port){
-        this.Hostname = Hostname;
-        this.Password = Password;
-        this.Username = Username;
-        this.LocalPath = new File(LocalPath);
-        this.Port = Port;
+    public FTPClient(String hostname, String username, String password, String localPath, int port){
+        this.hostname = hostname;
+        this.password = password;
+        this.username = username;
+        this.localPath = new File(localPath);
+        this.port = port;
     }
 
     /**
@@ -90,10 +90,10 @@ public class FTPClient {
             public void run() {
                 synchronized (connectedLock) {
                     try {
-                        ftpClient.connect(Hostname, Port);
+                        ftpClient.connect(hostname, port);
                         Log.i("FTPClient", ftpClient.getReplyString());
                         ftpClient.enterLocalPassiveMode();
-                        ftpClient.login(Username, Password);
+                        ftpClient.login(username, password);
                         Log.i("FTPClient", ftpClient.getReplyString());
                         connected = true;
                     } catch (Exception e) {
@@ -143,7 +143,7 @@ public class FTPClient {
     }
 
     /**
-     * Downloads a file from the server to the LocalPath
+     * Downloads a file from the server to the localPath
      * @param filename: Name of the file on the server
      * @param requester: callback for the thread
      * @throws ConnectException
@@ -198,9 +198,9 @@ public class FTPClient {
             @Override
             public void run(){
                 try {
-                    InputStream is = new FileInputStream(LocalPath.getAbsolutePath() + "/" + filename);
+                    InputStream is = new FileInputStream(localPath.getAbsolutePath() + "/" + filename);
                     ftpClient.storeFile(RemotePath, is);
-                    requester.uploadFileCallback(LocalPath.getAbsolutePath(), RemotePath);
+                    requester.uploadFileCallback(localPath.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
                     Log.e("FTPUpload", e.toString());
                     return;
@@ -225,50 +225,52 @@ public class FTPClient {
             @Override
             public void run(){
                 Log.i("Connection", "Starting SYNC");
+
+                // TODO: add semaphores to all usages of this.
                 syncing = true;
-                FTPFile[] RemoteFiles;
-                File[] LocalFiles;
-                ArrayList<String> LocalNames = new ArrayList<String>();
-                ArrayList<String> RemoteNames = new ArrayList<String>();
-                ArrayList<String> Upload = new ArrayList<String>();
-                ArrayList<String> Download = new ArrayList<String>();
+                FTPFile[] remoteFiles;
+                File[] localFiles;
+                ArrayList<String> localNames = new ArrayList<String>();
+                ArrayList<String> remoteNames = new ArrayList<String>();
+                ArrayList<String> upload = new ArrayList<String>();
+                ArrayList<String> download = new ArrayList<String>();
                 int changed = 0;
                 try {
                     ftpClient.changeWorkingDirectory("files");
-                    RemoteFiles = ftpClient.listFiles();  // files
+                    remoteFiles = ftpClient.listFiles();  // files
                     Log.i("FTP", ftpClient.getReplyString());
                 }catch(Exception e){
                     Log.e("FTPDir", e.toString());
                     return;
                 }
-                File LocalDir = LocalPath;
-                LocalFiles = LocalDir.listFiles();
-                Log.d("FTPSync", LocalPath.toString());
+                File localDir = localPath;
+                localFiles = localDir.listFiles();
+                Log.d("FTPSync", localPath.toString());
                 try {
-                    for(int i = 0; i < LocalFiles.length; i++){
-                        LocalNames.add(LocalFiles[i].getName());
+                    for(int i = 0; i < localFiles.length; i++){
+                        localNames.add(localFiles[i].getName());
                     }
-                    for(int i = 0; i < RemoteFiles.length; i++){
-                        RemoteNames.add(RemoteFiles[i].getName());
+                    for(int i = 0; i < remoteFiles.length; i++){
+                        remoteNames.add(remoteFiles[i].getName());
                     }
-                    for (int i = 0; i < RemoteNames.size(); i++) {
-                        if (!LocalNames.contains(RemoteNames.get(i)))
-                            Download.add(RemoteNames.get(i));
+                    for (int i = 0; i < remoteNames.size(); i++) {
+                        if (!localNames.contains(remoteNames.get(i)))
+                            download.add(remoteNames.get(i));
                     }
-                    for (int i = 0; i < LocalNames.size(); i++) {
-                        if (!RemoteNames.contains(LocalNames.get(i)))
-                            Upload.add(LocalNames.get(i));
+                    for (int i = 0; i < localNames.size(); i++) {
+                        if (!remoteNames.contains(localNames.get(i)))
+                            upload.add(localNames.get(i));
                     }
-                    for (int i = 0; i < Download.size(); i++) {
-                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Download.get(i);
+                    for (int i = 0; i < download.size(); i++) {
+                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + download.get(i);
                         OutputStream File = new FileOutputStream(newFile);
-                        downloadFile(Download.get(i), requester);
+                        downloadFile(download.get(i), requester);
                         changed += 1;
                     }
-                    for (int i = 0; i < Upload.size(); i++) {
-                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Upload.get(i);
+                    for (int i = 0; i < upload.size(); i++) {
+                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + upload.get(i);
                         InputStream File = new FileInputStream(newFile);
-                        uploadFile(Upload.get(i), requester);
+                        uploadFile(upload.get(i), requester);
                         changed += 1;
                     }
                     requester.syncCallback(changed);
