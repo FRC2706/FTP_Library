@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c1b4ba0-93cf-4a02-a3a4-9bac08724046" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FTP_Library.iml" afterPath="$PROJECT_DIR$/FTP_Library.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" />
     </list>
     <ignored path="FTP_Library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FTPClient.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FTPClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
-              <caret line="230" column="5" selection-start-line="230" selection-start-column="5" selection-end-line="230" selection-end-column="5" />
+              <caret line="154" column="81" selection-start-line="154" selection-start-column="81" selection-end-line="154" selection-end-column="81" />
               <folding>
                 <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#FTPClient#1;class#FTPClient#0" expanded="false" />
@@ -76,7 +71,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FTPRequester.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FTPRequester.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
@@ -1812,8 +1807,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
       </list>
     </option>
   </component>
@@ -2118,10 +2113,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="230" column="5" selection-start-line="230" selection-start-column="5" selection-end-line="230" selection-end-column="5" />
+          <caret line="154" column="81" selection-start-line="154" selection-start-column="81" selection-end-line="154" selection-end-column="81" />
           <folding>
             <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
             <element signature="method#FTPClient#1;class#FTPClient#0" expanded="false" />
@@ -2132,14 +2135,6 @@
             <element signature="method#uploadFile#0;class#FTPClient#0" expanded="false" />
             <element signature="method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

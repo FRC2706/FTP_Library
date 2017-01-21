@@ -182,40 +182,28 @@ public class FTPClient {
                 LocalFiles = LocalDir.listFiles();
                 Log.d("FTPSync", LocalPath.toString());
                 try {
-                    Log.d("FTPSync", "\nLocal Detection");
                     for(int i = 0; i < LocalFiles.length; i++){
-                        Log.d("FTPSync", LocalFiles[i].getName());
                         LocalNames.add(LocalFiles[i].getName());
                     }
-                    Log.d("FTPSync", "\nRemote Detection");
                     for(int i = 0; i < RemoteFiles.length; i++){
-                        Log.d("FTPSync", RemoteFiles[i].getName());
                         RemoteNames.add(RemoteFiles[i].getName());
                     }
-                    Log.d("FTPSync", "\nLocal Compare");
                     for (int i = 0; i < RemoteNames.size(); i++) {
-                        Log.d("FTPSync", RemoteNames.get(i));
                         if (!LocalNames.contains(RemoteNames.get(i)))
                             Download.add(RemoteNames.get(i));
                     }
-                    Log.d("FTPSync", "\nRemote Compare");
                     for (int i = 0; i < LocalNames.size(); i++) {
-                        Log.d("FTPSync", LocalNames.get(i));
                         if (!RemoteNames.contains(LocalNames.get(i)))
                             Upload.add(LocalNames.get(i));
                     }
-                    Log.d("FTPSync", "\nLocal Update");
                     for (int i = 0; i < Download.size(); i++) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Download.get(i);
-                        Log.d("FTPSync", newFile);
                         OutputStream File = new FileOutputStream(newFile);
                         downloadFile(Download.get(i), requester);
                         changed += 1;
                     }
-                    Log.d("FTPSync", "\nRemote Update");
                     for (int i = 0; i < Upload.size(); i++) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Upload.get(i);
-                        Log.d("FTPSync", newFile);
                         InputStream File = new FileInputStream(newFile);
                         uploadFile(Upload.get(i), requester);
                         changed += 1;
