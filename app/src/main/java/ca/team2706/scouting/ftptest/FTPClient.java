@@ -21,6 +21,8 @@ public class FTPClient {
     String Hostname;
     String Password;
     String Username;
+
+    //Port for connection
     int Port;
 
     //Local directory on device for files being downloaded.

@@ -7,7 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c1b4ba0-93cf-4a02-a3a4-9bac08724046" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
     </list>
     <ignored path="FTP_Library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,8 +43,8 @@
       <file leaf-file-name="FTPClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="28" column="53" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+            <state relative-caret-position="168">
+              <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
               <folding>
                 <element signature="docComment;method#FTPClient#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
@@ -54,8 +54,8 @@
                 <element signature="method#isConnected#0;class#FTPClient#0" expanded="false" />
                 <element signature="docComment;method#connect#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#connect#0;class#FTPClient#0" expanded="false" />
-                <element signature="e#2488#3205#0" expanded="true" />
-                <element signature="e#3204#3205#0" expanded="true" />
+                <element signature="e#2515#3232#0" expanded="true" />
+                <element signature="e#3231#3232#0" expanded="true" />
                 <element signature="docComment;method#dir#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#dir#0;class#FTPClient#0" expanded="false" />
                 <element signature="docComment;method#downloadFile#0;class#FTPClient#0" expanded="false" />
@@ -1828,8 +1828,8 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
       </list>
     </option>
   </component>
@@ -1897,28 +1897,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FTP_Library" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1936,16 +1914,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ftptest" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FTP_Library" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2325,10 +2293,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="28" column="53" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+        <state relative-caret-position="168">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding>
             <element signature="docComment;method#FTPClient#0;class#FTPClient#0" expanded="false" />
             <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
@@ -2338,8 +2317,8 @@
             <element signature="method#isConnected#0;class#FTPClient#0" expanded="false" />
             <element signature="docComment;method#connect#0;class#FTPClient#0" expanded="false" />
             <element signature="method#connect#0;class#FTPClient#0" expanded="false" />
-            <element signature="e#2488#3205#0" expanded="true" />
-            <element signature="e#3204#3205#0" expanded="true" />
+            <element signature="e#2515#3232#0" expanded="true" />
+            <element signature="e#3231#3232#0" expanded="true" />
             <element signature="docComment;method#dir#0;class#FTPClient#0" expanded="false" />
             <element signature="method#dir#0;class#FTPClient#0" expanded="false" />
             <element signature="docComment;method#downloadFile#0;class#FTPClient#0" expanded="false" />
@@ -2349,17 +2328,6 @@
             <element signature="docComment;method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
             <element signature="method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
