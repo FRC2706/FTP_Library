@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c1b4ba0-93cf-4a02-a3a4-9bac08724046" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" />
     </list>
     <ignored path="FTP_Library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,13 +36,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FTPClient.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FTPClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="212" column="81" selection-start-line="212" selection-start-column="81" selection-end-line="212" selection-end-column="81" />
+            <state relative-caret-position="308">
+              <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="docComment;method#FTPClient#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
                 <element signature="docComment;method#FTPClient#1;class#FTPClient#0" expanded="false" />
@@ -52,8 +50,8 @@
                 <element signature="method#isConnected#0;class#FTPClient#0" expanded="false" />
                 <element signature="docComment;method#connect#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#connect#0;class#FTPClient#0" expanded="false" />
-                <element signature="e#2359#3076#0" expanded="true" />
-                <element signature="e#3075#3076#0" expanded="true" />
+                <element signature="e#2488#3205#0" expanded="true" />
+                <element signature="e#3204#3205#0" expanded="true" />
                 <element signature="docComment;method#dir#0;class#FTPClient#0" expanded="false" />
                 <element signature="method#dir#0;class#FTPClient#0" expanded="false" />
                 <element signature="docComment;method#downloadFile#0;class#FTPClient#0" expanded="false" />
@@ -82,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="29" column="55" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
+            <state relative-caret-position="196">
+              <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
               <folding>
                 <element signature="method#onCreate#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#uploadFileCallback#0;class#MainActivity#0" expanded="false" />
@@ -1825,8 +1823,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPRequester.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java" />
       </list>
     </option>
   </component>
@@ -2275,14 +2273,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java</url>
-          <line>30</line>
-          <properties field="connectedLock" class="ca.team2706.scouting.ftptest.FTPClient" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2295,30 +2286,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="212" column="81" selection-start-line="212" selection-start-column="81" selection-end-line="212" selection-end-column="81" />
+        <state relative-caret-position="196">
+          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;method#FTPClient#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
-            <element signature="docComment;method#FTPClient#1;class#FTPClient#0" expanded="false" />
-            <element signature="method#FTPClient#1;class#FTPClient#0" expanded="false" />
-            <element signature="docComment;method#isConnected#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#isConnected#0;class#FTPClient#0" expanded="false" />
-            <element signature="docComment;method#connect#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#connect#0;class#FTPClient#0" expanded="false" />
-            <element signature="e#2359#3076#0" expanded="true" />
-            <element signature="e#3075#3076#0" expanded="true" />
-            <element signature="docComment;method#dir#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#dir#0;class#FTPClient#0" expanded="false" />
-            <element signature="docComment;method#downloadFile#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#downloadFile#0;class#FTPClient#0" expanded="false" />
-            <element signature="docComment;method#uploadFile#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#uploadFile#0;class#FTPClient#0" expanded="false" />
-            <element signature="docComment;method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
-            <element signature="method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#onCreate#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#uploadFileCallback#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#downloadFileCallback#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#syncCallback#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#dirCallback#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#requestPermissions#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2336,17 +2314,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/team2706/scouting/ftptest/FTPClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="29" column="55" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
+        <state relative-caret-position="308">
+          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
           <folding>
-            <element signature="method#onCreate#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#uploadFileCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#downloadFileCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#syncCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#dirCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#requestPermissions#0;class#MainActivity#0" expanded="false" />
+            <element signature="docComment;method#FTPClient#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#FTPClient#0;class#FTPClient#0" expanded="false" />
+            <element signature="docComment;method#FTPClient#1;class#FTPClient#0" expanded="false" />
+            <element signature="method#FTPClient#1;class#FTPClient#0" expanded="false" />
+            <element signature="docComment;method#isConnected#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#isConnected#0;class#FTPClient#0" expanded="false" />
+            <element signature="docComment;method#connect#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#connect#0;class#FTPClient#0" expanded="false" />
+            <element signature="e#2488#3205#0" expanded="true" />
+            <element signature="e#3204#3205#0" expanded="true" />
+            <element signature="docComment;method#dir#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#dir#0;class#FTPClient#0" expanded="false" />
+            <element signature="docComment;method#downloadFile#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#downloadFile#0;class#FTPClient#0" expanded="false" />
+            <element signature="docComment;method#uploadFile#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#uploadFile#0;class#FTPClient#0" expanded="false" />
+            <element signature="docComment;method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
+            <element signature="method#syncAllFiles#0;class#FTPClient#0" expanded="false" />
           </folding>
         </state>
       </provider>

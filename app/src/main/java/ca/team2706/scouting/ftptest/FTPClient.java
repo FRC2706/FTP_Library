@@ -1,6 +1,5 @@
 package ca.team2706.scouting.ftptest;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -15,7 +14,6 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.util.ArrayList;
 
-
 public class FTPClient {
     org.apache.commons.net.ftp.FTPClient ftpClient = new org.apache.commons.net.ftp.FTPClient();
 
@@ -23,14 +21,19 @@ public class FTPClient {
     String Hostname;
     String Password;
     String Username;
+    int Port;
 
+    //Local directory on device for files being downloaded.
     File LocalPath;
 
+    //Boolean to see if client is still syncing files
     public boolean syncing;
-    int Port;
+
+    //Thread voodoo stuff created by Mike O!
     private Object connectedLock = new Object();
+
+    //Is the client connected?
     private boolean connected = false;
-    private FTPFile[] DirReturn;
 
     /**
      * Constructor without port option
