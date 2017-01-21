@@ -11,13 +11,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.team2706.scouting.ftptest.MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <TextView
+        android:text="Nothing is displayed here, so if nothing happens it's probably fine."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
