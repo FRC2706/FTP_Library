@@ -17,18 +17,28 @@ import java.util.ArrayList;
 
 
 public class FTPClient {
-    public String Thing;
-    //FTPClient ftpClient = new FTPClient();
     org.apache.commons.net.ftp.FTPClient ftpClient = new org.apache.commons.net.ftp.FTPClient();
+
+    // for FTP server credentials
     String Hostname;
     String Password;
     String Username;
+
     File LocalPath;
+
     public boolean syncing;
     int Port;
     private Object connectedLock = new Object();
     private boolean connected = false;
     private FTPFile[] DirReturn;
+
+    /**
+     * Constructor without port option
+     * @param Hostname: Server IP Adress
+     * @param Username: Login Credential
+     * @param Password: Login Credential
+     * @param LocalPath: Local path for saving to the device
+     */
     public FTPClient(String Hostname, String Username, String Password, String LocalPath){
         this.Hostname = Hostname;
         this.Password = Password;
@@ -36,6 +46,15 @@ public class FTPClient {
         this.LocalPath = new File(LocalPath);
         this.Port = 21;
     }
+
+    /**
+     * Constructor with port option
+     * @param Hostname: Server IP Adress
+     * @param Username: Login Credential
+     * @param Password: Login Credential
+     * @param LocalPath: Local path for saving to the device
+     * @param Port: Custom port connection
+     */
     public FTPClient(String Hostname, String Username, String Password, String LocalPath, int Port){
         this.Hostname = Hostname;
         this.Password = Password;
@@ -43,11 +62,23 @@ public class FTPClient {
         this.LocalPath = new File(LocalPath);
         this.Port = Port;
     }
+
+    /**
+     * Tells you whether the FTPClient is connected or not.
+     *
+     * @return whether the FTPClient is connected or not.
+     **/
     public boolean isConnected() {
         synchronized (connectedLock) {
             return connected;
         }
     }
+
+    /**
+     * Tries to connect to a server with the parameters supplied with constructor
+     *
+     * @throws ConnectException
+     */
     public void connect() throws ConnectException {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -68,7 +99,7 @@ public class FTPClient {
             }
         });
         try {
-            Thread.sleep(5);  // multi-threaded voodoo. Give the AsyncTask 5 ms to get started and get the lock.
+            Thread.sleep(5);  //multi-threaded voodoo. Give the AsyncTask 5 ms to get started and get the lock.
         } catch (InterruptedException e) {
             // do nothing.
         }
@@ -78,6 +109,12 @@ public class FTPClient {
             }
         }
     }
+
+    /**
+     * Gets a directory listing of the current working directory
+     * @param requester: Callback for the thread
+     * @throws ConnectException
+     */
     public void dir(final FTPRequester requester) throws ConnectException{
         synchronized (connectedLock) {
             if (!connected) {
@@ -91,7 +128,7 @@ public class FTPClient {
                 try {
                     FTPFile[] files = ftpClient.listFiles();  // files
                     Log.i("FTP", ftpClient.getReplyString());
-                    requester.dirFeedback(files);
+                    requester.dirCallback(files);
                 }catch(Exception e){
                     Log.e("FTPDir", e.toString());
                     //DIR failed, log the error to console.
@@ -99,6 +136,13 @@ public class FTPClient {
             }
         });
     }
+
+    /**
+     * Downloads a file from the server to the LocalPath
+     * @param filename: Name of the file on the server
+     * @param requester: callback for the thread
+     * @throws ConnectException
+     */
     public void downloadFile(final String filename, final FTPRequester requester)throws ConnectException {
         synchronized (connectedLock){
             if(!connected){
@@ -123,7 +167,7 @@ public class FTPClient {
                 try {
                     OutputStream os = new FileOutputStream(file.getAbsolutePath());
                     ftpClient.retrieveFile(RemotePath, os);
-                    requester.downloadFileFeedback(file.getAbsolutePath(), RemotePath);
+                    requester.downloadFileCallback(file.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
                     Log.e("FTP", e.toString());
                     return;
@@ -131,6 +175,13 @@ public class FTPClient {
             }
         });
     }
+
+    /**
+     * Uploads a file from the device to the server
+     * @param filename: Path of file on device
+     * @param requester: Callback for thread
+     * @throws ConnectException
+     */
     public void uploadFile(final String filename, final FTPRequester requester)throws ConnectException {
         synchronized (connectedLock){
             if(!connected){
@@ -144,7 +195,7 @@ public class FTPClient {
                 try {
                     InputStream is = new FileInputStream(LocalPath.getAbsolutePath() + "/" + filename);
                     ftpClient.storeFile(RemotePath, is);
-                    requester.uploadFileFeedback(LocalPath.getAbsolutePath(), RemotePath);
+                    requester.uploadFileCallback(LocalPath.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
                     Log.e("FTPUpload", e.toString());
                     return;
@@ -152,6 +203,13 @@ public class FTPClient {
             }
         });
     }
+
+    /**
+     * Downloads all missing files on device from the server, and
+     * uploads all missing files on server from device.
+     * @param requester: Callback for thread
+     * @throws ConnectException
+     */
     public void syncAllFiles(final FTPRequester requester)throws ConnectException{
         synchronized (connectedLock){
             if(!connected){
@@ -208,7 +266,7 @@ public class FTPClient {
                         uploadFile(Upload.get(i), requester);
                         changed += 1;
                     }
-                    requester.syncFeedback(changed);
+                    requester.syncCallback(changed);
                 }catch(Exception e){
                     Log.e("FTPSync", e.toString());
                 }

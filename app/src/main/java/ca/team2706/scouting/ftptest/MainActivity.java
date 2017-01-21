@@ -21,43 +21,57 @@ import java.net.ConnectException;
 import java.security.Permission;
 
 public class MainActivity extends AppCompatActivity implements FTPRequester {
-    FTPFile[] filelisting;
+
+    //FTPClient object
     FTPClient ftpclient = new FTPClient("ftp.team2706.ca", "scout", "2706IsWatching!", Environment.getExternalStorageDirectory() + "/frc2706/files");
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Android code
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Request for permissions
         requestPermissions();
         try {
+            //Try to connect
             ftpclient.connect();
             if (ftpclient.isConnected()) {
-                ftpclient.dir(this);   // Kick off the network call to get the file list
+                //get a directory listing to enter PASV mode
+                ftpclient.dir(this);
+                //Sync files between device and server
                 ftpclient.syncAllFiles(this);
             } else {
+                //FTPClient didn't connect.
                 Log.d("FTPClient", "Failed to connect, cannot DIR.");
             }
         } catch (ConnectException e) {
-            // it must have failed to connect, so do nothing.
+            // it must have failed to connect, or something threw an error so do nothing.
         }
     }
-    public void uploadFileFeedback(String localFilename, String remoteFilename){
+
+    //Start of callback functions from FTPRequester.java
+    public void uploadFileCallback(String localFilename, String remoteFilename){
         //place code here for when the client is done uploading a file. This is run on the background thread
         //Arg localFilename: the local path of the uploaded file.
         //Arg remoteFilename: the remote path of the uploaded file.
     }
-    public void downloadFileFeedback(String localFilename, String remoteFilename) {
+    public void downloadFileCallback(String localFilename, String remoteFilename) {
         //Place code here for when the client is done downloading a file. This is run on the background thread
         //Arg localFilename: the local path of the downloaded file.
         //Arg remoteFilename: the remote path of the downloaded file.
     }
-    public void syncFeedback(int changedFiles){
+    public void syncCallback(int changedFiles){
         //Place code here for when the client is done syncing files. This is run on the background thread
         //Arg changedFiles: the number of files uploaded / downloaded.
     }
-    public void dirFeedback(FTPFile[] filelisting){
+    public void dirCallback(FTPFile[] filelisting){
         //Place code here for when the client is done getting a file listing. This is run on the background thread
         //Arg filelisting: the FTPFile array of the directorys and files from the listing
     }
+    //End of callback functions from FTPRequester.java
+
+    //Method that checks for and requests for permissions
     void requestPermissions(){
         Boolean ReadStoragePerm = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
         Boolean WriteStoragePerm = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
