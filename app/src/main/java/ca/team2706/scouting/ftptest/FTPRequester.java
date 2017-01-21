@@ -1,4 +1,6 @@
 package ca.team2706.scouting.ftptest;
+import android.app.Activity;
+
 import org.apache.commons.net.ftp.FTPFile;
 import java.io.InputStream;
 public interface FTPRequester {
@@ -32,4 +34,11 @@ public interface FTPRequester {
      * @param listing: FTPFile array of files in current working directory
      */
     void dirCallback(FTPFile[] listing);
+
+    /**
+     * Callback for getting the progress of sync
+     * @param Caption: Current caption to place above sync bar
+     * @param Progress: Progress out of 100 to be displayed.
+     */
+    void updateSyncBar(String Caption, int Progress, Activity activity);
 }

@@ -1,5 +1,6 @@
 package ca.team2706.scouting.ftptest;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -215,7 +216,7 @@ public class FTPClient {
      * @param requester: Callback for thread
      * @throws ConnectException
      */
-    public void syncAllFiles(final FTPRequester requester)throws ConnectException{
+    public void syncAllFiles(final FTPRequester requester, final Activity activity)throws ConnectException{
         synchronized (connectedLock){
             if(!connected){
                 throw new ConnectException("You cannot sync files if you're not connected!");
@@ -228,6 +229,9 @@ public class FTPClient {
                 syncing = true;
                 FTPFile[] RemoteFiles;
                 File[] LocalFiles;
+                int currentProgress = 0;
+                int maxUpProgress = 0;
+                int maxDownProgress = 0;
                 ArrayList<String> LocalNames = new ArrayList<String>();
                 ArrayList<String> RemoteNames = new ArrayList<String>();
                 ArrayList<String> Upload = new ArrayList<String>();
@@ -245,6 +249,7 @@ public class FTPClient {
                 LocalFiles = LocalDir.listFiles();
                 Log.d("FTPSync", LocalPath.toString());
                 try {
+                    requester.updateSyncBar("^checking for differences...", 0, activity);
                     for(int i = 0; i < LocalFiles.length; i++){
                         LocalNames.add(LocalFiles[i].getName());
                     }
@@ -259,25 +264,69 @@ public class FTPClient {
                         if (!RemoteNames.contains(LocalNames.get(i)))
                             Upload.add(LocalNames.get(i));
                     }
+                    maxDownProgress = Download.size();
+                    maxUpProgress = Upload.size();
                     for (int i = 0; i < Download.size(); i++) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Download.get(i);
                         OutputStream File = new FileOutputStream(newFile);
-                        downloadFile(Download.get(i), requester);
+                        downloadSync(Download.get(i));
                         changed += 1;
+                        currentProgress += 1;
+                        String display = newFile.split("frc2706")[1];
+                        requester.updateSyncBar("Downloading file " + currentProgress + "/" + maxDownProgress + ":\n" + display, (currentProgress*100) / maxDownProgress, activity);
                     }
+                    currentProgress = 0;
                     for (int i = 0; i < Upload.size(); i++) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Upload.get(i);
                         InputStream File = new FileInputStream(newFile);
-                        uploadFile(Upload.get(i), requester);
+                        uploadSync(Upload.get(i));
                         changed += 1;
+                        currentProgress += 1;
+                        String display = newFile.split("frc2706")[1];
+                        requester.updateSyncBar("Uploading file " + currentProgress + "/" + maxUpProgress + ":\n" + display, (currentProgress*100) / maxUpProgress, activity);
                     }
                     requester.syncCallback(changed);
+
                 }catch(Exception e){
                     Log.e("FTPSync", e.toString());
+                    requester.updateSyncBar("Error while syncing, see debug for more info.", 100, activity);
                 }
                 syncing = false;
+                if(changed==0) requester.updateSyncBar("Your device had the latest files!", 100, activity); else requester.updateSyncBar("Done syncing!", 100, activity);
                 Log.d("FTPSync", "Sync done!");
+
             }
         });
+    }
+    private void uploadSync(String filename){
+        final String RemotePath = filename;
+        try {
+            InputStream is = new FileInputStream(LocalPath.getAbsolutePath() + "/" + filename);
+            ftpClient.storeFile(RemotePath, is);
+        }catch(Exception e) {
+            Log.e("FTPUpload", e.toString());
+            return;
+        }
+    }
+    private void downloadSync(String filename){
+        final File file = new File(Environment.getExternalStorageDirectory() + "/frc2706/files/" + filename);
+        final File folder = new File(file.getParent());
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdirs();
+        }
+        if (success) {
+            // Do something on success
+        } else {
+            Log.e("FTPDownload.mkdirs", "Unable to create directorys they might already exist!");
+        }
+        String RemotePath = filename;
+        try {
+            OutputStream os = new FileOutputStream(file.getAbsolutePath());
+            ftpClient.retrieveFile(RemotePath, os);
+        }catch(Exception e){
+            Log.e("FTP", e.toString());
+            return;
+        }
     }
 }

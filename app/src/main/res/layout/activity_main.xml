@@ -12,11 +12,33 @@
     tools:context="ca.team2706.scouting.ftptest.MainActivity">
 
     <TextView
-        android:text="Nothing is displayed here, so if nothing happens it's probably fine."
+        android:text="No sync in progress! Start one here -->"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/syncCaption"
+        android:layout_toStartOf="@+id/imageButton"
+        android:layout_above="@+id/syncProgressBar" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_save"
+        android:id="@+id/imageButton"
+        android:elevation="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="startSync" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/syncProgressBar"
+        android:layout_alignBottom="@+id/imageButton"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imageButton"
+        android:indeterminate="false" />
+
 </RelativeLayout>
