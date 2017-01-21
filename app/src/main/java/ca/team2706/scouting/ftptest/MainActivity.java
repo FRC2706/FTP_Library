@@ -20,99 +20,55 @@ import java.io.InputStream;
 import java.net.ConnectException;
 import java.security.Permission;
 
-public class MainActivity extends AppCompatActivity
-        implements FTPRequester {
-
+public class MainActivity extends AppCompatActivity implements FTPRequester {
     FTPFile[] filelisting;
     FTPClient ftpclient = new FTPClient("ftp.team2706.ca", "scout", "2706IsWatching!", Environment.getExternalStorageDirectory() + "/frc2706/files");
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED&&(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
+        requestPermissions();
         try {
             ftpclient.connect();
             if (ftpclient.isConnected()) {
                 ftpclient.dir(this);   // Kick off the network call to get the file list
-                ftpclient.syncAllFiles(this, this);
-            }else{
+                ftpclient.syncAllFiles(this);
+            } else {
                 Log.d("FTPClient", "Failed to connect, cannot DIR.");
             }
-        }
-        catch (ConnectException e) {
+        } catch (ConnectException e) {
             // it must have failed to connect, so do nothing.
         }
     }
-
-
-    /** This method accepts a list of files as a FTPFile[],
-     * then it sets that list into the global variable FTPFile[] filelisting,
-     * and finally it prints the list to the log.
-     **/
-    public void setFileList(FTPFile[] fileList) {
-        this.filelisting = fileList;
-
-        String toDisplay = "";
-        for(int i = 0; i < filelisting.length; i++){
-            toDisplay += "\n" + filelisting[i].getName();
-        }
-
-        Log.d("FTPdir", toDisplay);
+    public void uploadFileFeedback(String localFilename, String remoteFilename){
+        //place code here for when the client is done uploading a file. This is run on the background thread
+        //Arg localFilename: the local path of the uploaded file.
+        //Arg remoteFilename: the remote path of the uploaded file.
     }
-    public void getFileStream(InputStream filestream){
-        Log.d("FTPCLIENT", "Function Started");
-        try {
-            int character;
-            String string = "";
-            while ((character = filestream.read()) != -1) {
-                string += (char) character;
+    public void downloadFileFeedback(String localFilename, String remoteFilename) {
+        //Place code here for when the client is done downloading a file. This is run on the background thread
+        //Arg localFilename: the local path of the downloaded file.
+        //Arg remoteFilename: the remote path of the downloaded file.
+    }
+    public void syncFeedback(int changedFiles){
+        //Place code here for when the client is done syncing files. This is run on the background thread
+        //Arg changedFiles: the number of files uploaded / downloaded.
+    }
+    public void dirFeedback(FTPFile[] filelisting){
+        //Place code here for when the client is done getting a file listing. This is run on the background thread
+        //Arg filelisting: the FTPFile array of the directorys and files from the listing
+    }
+    void requestPermissions(){
+        Boolean ReadStoragePerm = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
+        Boolean WriteStoragePerm = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
+        if (ReadStoragePerm&&WriteStoragePerm) {
+            //We already have both permissions, so we're good.
+        }else{
+            //We need to get one of the two permissions, so we'll ask for both.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             }
-            Log.i("FTPClient", string);
-        } catch (Exception e) {
-            Log.e("FTPClient", e.toString());
         }
-        BitmapDrawable.createFromStream(filestream, "");
-
-    }
-    public void uploadFile(String filename){
-
-    }
-    public void downloadFile(String filename) {
-        Log.d("FTPCLIENT", "Function Started");
-        try {
-            File imgFile = new File(filename);
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                ImageView myImage = (ImageView) findViewById(R.id.imageView);
-                myImage.setImageBitmap(myBitmap);
-            }
-        } catch (Exception e) {
-            Log.e("FTPClient", e.toString());
-        }
-
-    }
-    public void doneSync(){
-
     }
 }

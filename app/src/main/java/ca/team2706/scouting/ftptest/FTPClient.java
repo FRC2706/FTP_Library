@@ -26,10 +26,9 @@ public class FTPClient {
     File LocalPath;
     public boolean syncing;
     int Port;
-    private Object connectedLock = new Object();  // some multi-threading voodoo, we can explain in person.
+    private Object connectedLock = new Object();
     private boolean connected = false;
     private FTPFile[] DirReturn;
-
     public FTPClient(String Hostname, String Username, String Password, String LocalPath){
         this.Hostname = Hostname;
         this.Password = Password;
@@ -37,8 +36,6 @@ public class FTPClient {
         this.LocalPath = new File(LocalPath);
         this.Port = 21;
     }
-
-
     public FTPClient(String Hostname, String Username, String Password, String LocalPath, int Port){
         this.Hostname = Hostname;
         this.Password = Password;
@@ -46,75 +43,47 @@ public class FTPClient {
         this.LocalPath = new File(LocalPath);
         this.Port = Port;
     }
-
     public boolean isConnected() {
         synchronized (connectedLock) {
             return connected;
         }
     }
-
-    /**
-     *
-     * @throws ConnectException If the connection to the server fails.
-     */
     public void connect() throws ConnectException {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                synchronized (connectedLock) {  // some mutli-threading voodoo
-                                                // keep a lock on this while we are opening the
-                                                // connection so other threads
-                                                // know we are in the process of connecting
-                                                // and they should wait for this to finish.
+                synchronized (connectedLock) {
                     try {
                         ftpClient.connect(Hostname, Port);
                         Log.i("FTPClient", ftpClient.getReplyString());
                         ftpClient.enterLocalPassiveMode();
                         ftpClient.login(Username, Password);
                         Log.i("FTPClient", ftpClient.getReplyString());
-
                         connected = true;
                     } catch (Exception e) {
                         Log.e("FTPClient", e.toString());
-
                         connected = false;
                     }
                 }
             }
         });
-
         try {
             Thread.sleep(5);  // multi-threaded voodoo. Give the AsyncTask 5 ms to get started and get the lock.
         } catch (InterruptedException e) {
             // do nothing.
         }
-
-        synchronized (connectedLock) {  // Some multi-threaded voodoo.
-                                        // Only one thread can have the lock at a time, so this will
-                                        // is will block until the Async task is finished.
+        synchronized (connectedLock) {
             if (!connected) {
                 throw new ConnectException("FTPClient failed to connect to FTP server");
             }
         }
     }
-
-    /**
-     * @param requester the UI Activity that called me, once I have my data, I'll hand it back to
-     *                  this Activity's setFileList(..) method.
-     *
-     * @throws ConnectException If you try to call this when we are not properly connected to an FTP server.
-     */
     public void dir(final FTPRequester requester) throws ConnectException{
-
-        synchronized (connectedLock) {  // Some multi-threaded voodoo.
-                                        // Only one thread can have the lock at a time, so if a
-                                        // connection is in progress, we will get blocked
-                                        // until it is finished.
+        synchronized (connectedLock) {
             if (!connected) {
-                throw new ConnectException("FTPClient can not perform a dir() if it is not connected!");
+                throw new ConnectException("You cannot get a directory listing if you are not connected!");
             }
         }
-
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -122,21 +91,20 @@ public class FTPClient {
                 try {
                     FTPFile[] files = ftpClient.listFiles();  // files
                     Log.i("FTP", ftpClient.getReplyString());
-
-                    requester.setFileList(files);   // hand the file list back to whichever Activity
-                                                    // called me
+                    requester.dirFeedback(files);
                 }catch(Exception e){
                     Log.e("FTPDir", e.toString());
-
-                    // Option 1: call requester.setFileList(null);
-                    // so that it knows the call failed and can print something to the user.
-
-                    // Option 2: don't do anything and don't report anything to the user.
+                    //DIR failed, log the error to console.
                 }
             }
         });
     }
-    public void downloadFile(final String filename, final FTPRequester requester, final Activity activery) {
+    public void downloadFile(final String filename, final FTPRequester requester)throws ConnectException {
+        synchronized (connectedLock){
+            if(!connected){
+                throw new ConnectException("You cannot download a file if you're not connected!");
+            }
+        }
         final File file = new File(Environment.getExternalStorageDirectory() + "/frc2706/files/" + filename);
         final File folder = new File(file.getParent());
         boolean success = true;
@@ -155,6 +123,7 @@ public class FTPClient {
                 try {
                     OutputStream os = new FileOutputStream(file.getAbsolutePath());
                     ftpClient.retrieveFile(RemotePath, os);
+                    requester.downloadFileFeedback(file.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
                     Log.e("FTP", e.toString());
                     return;
@@ -162,14 +131,20 @@ public class FTPClient {
             }
         });
     }
-    public void uploadFile(final String filename, final FTPRequester requester, final Activity activery){
+    public void uploadFile(final String filename, final FTPRequester requester)throws ConnectException {
+        synchronized (connectedLock){
+            if(!connected){
+                throw new ConnectException("You cannot upload a file if you're not connected!");
+            }
+        }
         final String RemotePath = filename;
         AsyncTask.execute(new Runnable(){
             @Override
             public void run(){
                 try {
                     InputStream is = new FileInputStream(LocalPath.getAbsolutePath() + "/" + filename);
-                    ftpClient.storeFile(filename, is);
+                    ftpClient.storeFile(RemotePath, is);
+                    requester.uploadFileFeedback(LocalPath.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
                     Log.e("FTPUpload", e.toString());
                     return;
@@ -177,7 +152,12 @@ public class FTPClient {
             }
         });
     }
-    public void syncAllFiles(final FTPRequester requester, final Activity activery){
+    public void syncAllFiles(final FTPRequester requester)throws ConnectException{
+        synchronized (connectedLock){
+            if(!connected){
+                throw new ConnectException("You cannot sync files if you're not connected!");
+            }
+        }
         AsyncTask.execute(new Runnable() {
             @Override
             public void run(){
@@ -189,6 +169,7 @@ public class FTPClient {
                 ArrayList<String> RemoteNames = new ArrayList<String>();
                 ArrayList<String> Upload = new ArrayList<String>();
                 ArrayList<String> Download = new ArrayList<String>();
+                int changed = 0;
                 try {
                     ftpClient.changeWorkingDirectory("files");
                     RemoteFiles = ftpClient.listFiles();  // files
@@ -228,15 +209,18 @@ public class FTPClient {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Download.get(i);
                         Log.d("FTPSync", newFile);
                         OutputStream File = new FileOutputStream(newFile);
-                        downloadFile(Download.get(i), requester, activery);
+                        downloadFile(Download.get(i), requester);
+                        changed += 1;
                     }
                     Log.d("FTPSync", "\nRemote Update");
                     for (int i = 0; i < Upload.size(); i++) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Upload.get(i);
                         Log.d("FTPSync", newFile);
                         InputStream File = new FileInputStream(newFile);
-                        uploadFile(Upload.get(i), requester, activery);
+                        uploadFile(Upload.get(i), requester);
+                        changed += 1;
                     }
+                    requester.syncFeedback(changed);
                 }catch(Exception e){
                     Log.e("FTPSync", e.toString());
                 }
