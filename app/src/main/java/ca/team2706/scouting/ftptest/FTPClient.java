@@ -223,7 +223,6 @@ public class FTPClient {
             @Override
             public void run(){
                 Log.i("Connection", "Starting SYNC");
-                syncing = true;
                 int currentProgress = 0;
                 int maxUpProgress = 0;
                 int maxDownProgress = 0;
@@ -262,17 +261,17 @@ public class FTPClient {
                             filesToDownload.add(remoteName);
                     }
                     for (String localName : localNames) {
-                        if (!RemoteNames.contains(LocalNames.get(i)))
-                            Upload.add(LocalNames.get(i));
+                        if (!remoteNames.contains(localName))
+                            filesToUpload.add(localName);
                         else
                             Unchanged += 1;
                     }
-                    maxDownProgress = Download.size();
-                    maxUpProgress = Upload.size();
+                    maxDownProgress = filesToDownload.size();
+                    maxUpProgress = filesToUpload.size();
                     for (String fileToDownload : filesToDownload) {
-                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Download.get(i);
+                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + fileToDownload;
                         OutputStream File = new FileOutputStream(newFile);
-                        downloadSync(Download.get(i));
+                        downloadSync(fileToDownload);
                         changed += 1;
                         Downloaded += 1;
                         currentProgress += 1;
@@ -280,10 +279,10 @@ public class FTPClient {
                         requester.updateSyncBar("Downloading file " + currentProgress + "/" + maxDownProgress + ":\n" + display, (currentProgress*100) / maxDownProgress, activity);
                     }
                     currentProgress = 0;
-                    for for (String fileToUpload : filesToUpload) {
-                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Upload.get(i);
+                    for (String fileToUpload : filesToUpload) {
+                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + fileToUpload;
                         InputStream File = new FileInputStream(newFile);
-                        uploadSync(Upload.get(i));
+                        uploadSync(fileToUpload);
                         changed += 1;
                         Uploaded += 1;
                         currentProgress += 1;
@@ -296,7 +295,6 @@ public class FTPClient {
                     Log.e("FTPSync", e.toString());
                     requester.updateSyncBar("Error while syncing, see debug for more info.", 100, activity);
                 }
-                syncing = false;
                 String up = String.valueOf(Uploaded);
                 String down = String.valueOf(Downloaded);
                 String unchanged = String.valueOf(Unchanged);
@@ -312,7 +310,7 @@ public class FTPClient {
     private void uploadSync(String filename){
         final String RemotePath = filename;
         try {
-            InputStream is = new FileInputStream(LocalPath.getAbsolutePath() + "/" + filename);
+            InputStream is = new FileInputStream(localPath.getAbsolutePath() + "/" + filename);
             ftpClient.storeFile(RemotePath, is);
         }catch(Exception e) {
             Log.e("FTPUpload", e.toString());
