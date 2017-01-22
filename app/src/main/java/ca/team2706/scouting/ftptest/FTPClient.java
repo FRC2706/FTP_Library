@@ -237,6 +237,9 @@ public class FTPClient {
                 ArrayList<String> Upload = new ArrayList<String>();
                 ArrayList<String> Download = new ArrayList<String>();
                 int changed = 0;
+                int Uploaded = 0;
+                int Downloaded = 0;
+                int Unchanged = 0;
                 try {
                     ftpClient.changeWorkingDirectory("files");
                     RemoteFiles = ftpClient.listFiles();  // files
@@ -263,6 +266,8 @@ public class FTPClient {
                     for (int i = 0; i < LocalNames.size(); i++) {
                         if (!RemoteNames.contains(LocalNames.get(i)))
                             Upload.add(LocalNames.get(i));
+                        else
+                            Unchanged += 1;
                     }
                     maxDownProgress = Download.size();
                     maxUpProgress = Upload.size();
@@ -271,6 +276,7 @@ public class FTPClient {
                         OutputStream File = new FileOutputStream(newFile);
                         downloadSync(Download.get(i));
                         changed += 1;
+                        Downloaded += 1;
                         currentProgress += 1;
                         String display = newFile.split("frc2706")[1];
                         requester.updateSyncBar("Downloading file " + currentProgress + "/" + maxDownProgress + ":\n" + display, (currentProgress*100) / maxDownProgress, activity);
@@ -281,6 +287,7 @@ public class FTPClient {
                         InputStream File = new FileInputStream(newFile);
                         uploadSync(Upload.get(i));
                         changed += 1;
+                        Uploaded += 1;
                         currentProgress += 1;
                         String display = newFile.split("frc2706")[1];
                         requester.updateSyncBar("Uploading file " + currentProgress + "/" + maxUpProgress + ":\n" + display, (currentProgress*100) / maxUpProgress, activity);
@@ -292,7 +299,13 @@ public class FTPClient {
                     requester.updateSyncBar("Error while syncing, see debug for more info.", 100, activity);
                 }
                 syncing = false;
-                if(changed==0) requester.updateSyncBar("Your device had the latest files!", 100, activity); else requester.updateSyncBar("Done syncing!", 100, activity);
+                String up = String.valueOf(Uploaded);
+                String down = String.valueOf(Downloaded);
+                String unchanged = String.valueOf(Unchanged);
+                if(changed==0)
+                    requester.updateSyncBar("Your device had the latest files!", 100, activity);
+                else
+                    requester.updateSyncBar("Done syncing! Unchanged Files: "+Unchanged+"\n"+down+" downloaded, "+up+" uploaded.", 100, activity);
                 Log.d("FTPSync", "Sync done!");
 
             }
