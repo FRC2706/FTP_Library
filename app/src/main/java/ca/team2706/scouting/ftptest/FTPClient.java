@@ -19,54 +19,50 @@ public class FTPClient {
     org.apache.commons.net.ftp.FTPClient ftpClient = new org.apache.commons.net.ftp.FTPClient();
 
     // for FTP server credentials
-    String Hostname;
-    String Password;
-    String Username;
+    private String hostname;
+    private String password;
+    private String username;
 
-    //Port for connection
-    int Port;
+    //port for connection
+    private int port;
 
     //Local directory on device for files being downloaded.
-    File LocalPath;
-
-    //Boolean to see if client is still syncing files
-    public boolean syncing;
-
-    //Thread voodoo stuff created by Mike O!
-    private Object connectedLock = new Object();
+    private File localPath;
 
     //Is the client connected?
+    private Object connectedThreadLock = new Object();
     private boolean connected = false;
+
 
     /**
      * Constructor without port option
-     * @param Hostname: Server IP Adress
-     * @param Username: Login Credential
-     * @param Password: Login Credential
-     * @param LocalPath: Local path for saving to the device
+     * @param hostname: Server IP Adress
+     * @param username: Login Credential
+     * @param password: Login Credential
+     * @param localPath: Local path for saving to the device
      */
-    public FTPClient(String Hostname, String Username, String Password, String LocalPath){
-        this.Hostname = Hostname;
-        this.Password = Password;
-        this.Username = Username;
-        this.LocalPath = new File(LocalPath);
-        this.Port = 21;
+    public FTPClient(String hostname, String username, String password, String localPath){
+        this.hostname = hostname;
+        this.password = password;
+        this.username = username;
+        this.localPath = new File(localPath);
+        this.port = 21;
     }
 
     /**
      * Constructor with port option
-     * @param Hostname: Server IP Adress
-     * @param Username: Login Credential
-     * @param Password: Login Credential
-     * @param LocalPath: Local path for saving to the device
-     * @param Port: Custom port connection
+     * @param hostname: Server IP Adress
+     * @param username: Login Credential
+     * @param password: Login Credential
+     * @param localPath: Local path for saving to the device
+     * @param port: Custom port connection
      */
-    public FTPClient(String Hostname, String Username, String Password, String LocalPath, int Port){
-        this.Hostname = Hostname;
-        this.Password = Password;
-        this.Username = Username;
-        this.LocalPath = new File(LocalPath);
-        this.Port = Port;
+    public FTPClient(String hostname, String username, String password, String localPath, int port){
+        this.hostname = hostname;
+        this.password = password;
+        this.username = username;
+        this.localPath = new File(localPath);
+        this.port = port;
     }
 
     /**
@@ -75,7 +71,7 @@ public class FTPClient {
      * @return whether the FTPClient is connected or not.
      **/
     public boolean isConnected() {
-        synchronized (connectedLock) {
+        synchronized (connectedThreadLock) {
             return connected;
         }
     }
@@ -89,12 +85,12 @@ public class FTPClient {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                synchronized (connectedLock) {
+                synchronized (connectedThreadLock) {
                     try {
-                        ftpClient.connect(Hostname, Port);
+                        ftpClient.connect(hostname, port);
                         Log.i("FTPClient", ftpClient.getReplyString());
                         ftpClient.enterLocalPassiveMode();
-                        ftpClient.login(Username, Password);
+                        ftpClient.login(username, password);
                         Log.i("FTPClient", ftpClient.getReplyString());
                         connected = true;
                     } catch (Exception e) {
@@ -109,7 +105,7 @@ public class FTPClient {
         } catch (InterruptedException e) {
             // do nothing.
         }
-        synchronized (connectedLock) {
+        synchronized (connectedThreadLock) {
             if (!connected) {
                 throw new ConnectException("FTPClient failed to connect to FTP server");
             }
@@ -122,7 +118,7 @@ public class FTPClient {
      * @throws ConnectException
      */
     public void dir(final FTPRequester requester) throws ConnectException{
-        synchronized (connectedLock) {
+        synchronized (connectedThreadLock) {
             if (!connected) {
                 throw new ConnectException("You cannot get a directory listing if you are not connected!");
             }
@@ -135,7 +131,7 @@ public class FTPClient {
                     FTPFile[] files = ftpClient.listFiles();  // files
                     Log.i("FTP", ftpClient.getReplyString());
                     requester.dirCallback(files);
-                }catch(Exception e){
+                } catch (Exception e) {
                     Log.e("FTPDir", e.toString());
                     //DIR failed, log the error to console.
                 }
@@ -144,13 +140,13 @@ public class FTPClient {
     }
 
     /**
-     * Downloads a file from the server to the LocalPath
+     * Downloads a file from the server to the localPath
      * @param filename: Name of the file on the server
      * @param requester: callback for the thread
      * @throws ConnectException
      */
     public void downloadFile(final String filename, final FTPRequester requester)throws ConnectException {
-        synchronized (connectedLock){
+        synchronized (connectedThreadLock){
             if(!connected){
                 throw new ConnectException("You cannot download a file if you're not connected!");
             }
@@ -189,7 +185,7 @@ public class FTPClient {
      * @throws ConnectException
      */
     public void uploadFile(final String filename, final FTPRequester requester)throws ConnectException {
-        synchronized (connectedLock){
+        synchronized (connectedThreadLock){
             if(!connected){
                 throw new ConnectException("You cannot upload a file if you're not connected!");
             }
@@ -199,9 +195,9 @@ public class FTPClient {
             @Override
             public void run(){
                 try {
-                    InputStream is = new FileInputStream(LocalPath.getAbsolutePath() + "/" + filename);
+                    InputStream is = new FileInputStream(localPath.getAbsolutePath() + "/" + filename);
                     ftpClient.storeFile(RemotePath, is);
-                    requester.uploadFileCallback(LocalPath.getAbsolutePath(), RemotePath);
+                    requester.uploadFileCallback(localPath.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
                     Log.e("FTPUpload", e.toString());
                     return;
@@ -216,8 +212,9 @@ public class FTPClient {
      * @param requester: Callback for thread
      * @throws ConnectException
      */
+
     public void syncAllFiles(final FTPRequester requester, final Activity activity)throws ConnectException{
-        synchronized (connectedLock){
+      synchronized (connectedThreadLock){
             if(!connected){
                 throw new ConnectException("You cannot sync files if you're not connected!");
             }
@@ -227,43 +224,44 @@ public class FTPClient {
             public void run(){
                 Log.i("Connection", "Starting SYNC");
                 syncing = true;
-                FTPFile[] RemoteFiles;
-                File[] LocalFiles;
                 int currentProgress = 0;
                 int maxUpProgress = 0;
                 int maxDownProgress = 0;
-                ArrayList<String> LocalNames = new ArrayList<String>();
-                ArrayList<String> RemoteNames = new ArrayList<String>();
-                ArrayList<String> Upload = new ArrayList<String>();
-                ArrayList<String> Download = new ArrayList<String>();
+                FTPFile[] remoteFiles;
+                File[] localFiles;
+                ArrayList<String> localNames = new ArrayList<String>();
+                ArrayList<String> remoteNames = new ArrayList<String>();
+                ArrayList<String> filesToUpload = new ArrayList<String>();
+                ArrayList<String> filesToDownload = new ArrayList<String>();
                 int changed = 0;
                 int Uploaded = 0;
                 int Downloaded = 0;
                 int Unchanged = 0;
                 try {
                     ftpClient.changeWorkingDirectory("files");
-                    RemoteFiles = ftpClient.listFiles();  // files
+                    remoteFiles = ftpClient.listFiles();  // files
                     Log.i("FTP", ftpClient.getReplyString());
                 }catch(Exception e){
                     Log.e("FTPDir", e.toString());
                     return;
                 }
-                File LocalDir = LocalPath;
-                LocalFiles = LocalDir.listFiles();
-                Log.d("FTPSync", LocalPath.toString());
+
+                File localDir = localPath;
+                localFiles = localDir.listFiles();
+                Log.d("FTPSync", localPath.toString());
                 try {
                     requester.updateSyncBar("^checking for differences...", 0, activity);
-                    for(int i = 0; i < LocalFiles.length; i++){
-                        LocalNames.add(LocalFiles[i].getName());
+                    for(File localFile : localFiles){
+                        localNames.add(localFile.getName());
                     }
-                    for(int i = 0; i < RemoteFiles.length; i++){
-                        RemoteNames.add(RemoteFiles[i].getName());
+                    for(FTPFile remoteFile : remoteFiles){
+                        remoteNames.add(remoteFile.getName());
                     }
-                    for (int i = 0; i < RemoteNames.size(); i++) {
-                        if (!LocalNames.contains(RemoteNames.get(i)))
-                            Download.add(RemoteNames.get(i));
+                    for (String remoteName : remoteNames) {
+                        if (!localNames.contains(remoteName))
+                            filesToDownload.add(remoteName);
                     }
-                    for (int i = 0; i < LocalNames.size(); i++) {
+                    for (String localName : localNames) {
                         if (!RemoteNames.contains(LocalNames.get(i)))
                             Upload.add(LocalNames.get(i));
                         else
@@ -271,7 +269,7 @@ public class FTPClient {
                     }
                     maxDownProgress = Download.size();
                     maxUpProgress = Upload.size();
-                    for (int i = 0; i < Download.size(); i++) {
+                    for (String fileToDownload : filesToDownload) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Download.get(i);
                         OutputStream File = new FileOutputStream(newFile);
                         downloadSync(Download.get(i));
@@ -282,7 +280,7 @@ public class FTPClient {
                         requester.updateSyncBar("Downloading file " + currentProgress + "/" + maxDownProgress + ":\n" + display, (currentProgress*100) / maxDownProgress, activity);
                     }
                     currentProgress = 0;
-                    for (int i = 0; i < Upload.size(); i++) {
+                    for for (String fileToUpload : filesToUpload) {
                         String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + Upload.get(i);
                         InputStream File = new FileInputStream(newFile);
                         uploadSync(Upload.get(i));
