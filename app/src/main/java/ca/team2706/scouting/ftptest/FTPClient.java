@@ -232,8 +232,8 @@ public class FTPClient {
                 File[] localFiles;
                 ArrayList<String> localNames = new ArrayList<String>();
                 ArrayList<String> remoteNames = new ArrayList<String>();
-                ArrayList<String> upload = new ArrayList<String>();
-                ArrayList<String> download = new ArrayList<String>();
+                ArrayList<String> filesToUpload = new ArrayList<String>();
+                ArrayList<String> filesToDownload = new ArrayList<String>();
                 int changed = 0;
                 try {
                     ftpClient.changeWorkingDirectory("files");
@@ -247,30 +247,26 @@ public class FTPClient {
                 localFiles = localDir.listFiles();
                 Log.d("FTPSync", localPath.toString());
                 try {
-                    for(int i = 0; i < localFiles.length; i++){
-                        localNames.add(localFiles[i].getName());
+                    for(File localFile : localFiles){
+                        localNames.add(localFile.getName());
                     }
-                    for(int i = 0; i < remoteFiles.length; i++){
-                        remoteNames.add(remoteFiles[i].getName());
+                    for(FTPFile remoteFile : remoteFiles){
+                        remoteNames.add(remoteFile.getName());
                     }
-                    for (int i = 0; i < remoteNames.size(); i++) {
-                        if (!localNames.contains(remoteNames.get(i)))
-                            download.add(remoteNames.get(i));
+                    for (String remoteName : remoteNames) {
+                        if (!localNames.contains(remoteName))
+                            filesToDownload.add(remoteName);
                     }
-                    for (int i = 0; i < localNames.size(); i++) {
-                        if (!remoteNames.contains(localNames.get(i)))
-                            upload.add(localNames.get(i));
+                    for (String localName : localNames) {
+                        if (!remoteNames.contains(localName))
+                            filesToUpload.add(localName);
                     }
-                    for (int i = 0; i < download.size(); i++) {
-                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + download.get(i);
-                        OutputStream File = new FileOutputStream(newFile);
-                        downloadFile(download.get(i), requester);
+                    for (String fileToDownload : filesToDownload) {
+                        downloadFile(fileToDownload, requester);
                         changed += 1;
                     }
-                    for (int i = 0; i < upload.size(); i++) {
-                        String newFile = Environment.getExternalStorageDirectory() + "/frc2706/files/" + upload.get(i);
-                        InputStream File = new FileInputStream(newFile);
-                        uploadFile(upload.get(i), requester);
+                    for (String fileToUpload : filesToUpload) {
+                        uploadFile(fileToUpload, requester);
                         changed += 1;
                     }
                     requester.syncCallback(changed);
