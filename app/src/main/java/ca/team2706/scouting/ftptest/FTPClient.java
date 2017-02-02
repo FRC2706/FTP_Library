@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,16 +83,6 @@ public class FTPClient {
             return connected;
         }
     }
-    public void test(){
-        try {
-            FTPFile[] files = ftpClient.listFiles();
-            for(FTPFile file : files){
-                Log.d("LISTTest", file.getName());
-            }
-        }catch(Exception e){
-
-        }
-    }
     /**
      * Tries to connect to a server with the parameters supplied with constructor
      *
@@ -104,13 +95,13 @@ public class FTPClient {
                 synchronized (connectedThreadLock) {
                     try {
                         ftpClient.connect(hostname, port);
-                        Log.i("FTPClient", ftpClient.getReplyString());
+                        Log.i("FTPClient|INFO", ftpClient.getReplyString());
                         ftpClient.enterLocalPassiveMode();
                         ftpClient.login(username, password);
-                        Log.i("FTPClient", ftpClient.getReplyString());
+                        Log.i("FTPClient|INFO", ftpClient.getReplyString());
                         connected = true;
                     } catch (Exception e) {
-                        Log.e("FTPClient", e.toString());
+                        Log.e("FTPClient|connect", e.toString());
                         connected = false;
                     }
                 }
@@ -142,13 +133,13 @@ public class FTPClient {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                Log.i("Connection", "Starting DIR");
+                Log.i("FTPClient", "Starting DIR");
                 try {
                     FTPFile[] files = ftpClient.listFiles();  // files
-                    Log.i("FTP", ftpClient.getReplyString());
+                    Log.i("FTPClient|INFO", ftpClient.getReplyString());
                     requester.dirCallback(files);
                 } catch (Exception e) {
-                    Log.e("FTPDir", e.toString());
+                    Log.e("FTPClient|dir", e.toString());
                     //DIR failed, log the error to console.
                 }
             }
@@ -176,7 +167,7 @@ public class FTPClient {
         if (success) {
             // Do something on success
         } else {
-            Log.e("FTPDownload.mkdirs", "Unable to create directorys they might already exist!");
+            Log.e("FTPClient", "Unable to create directorys they might already exist!");
         }
         final String RemotePath = filename;
         AsyncTask.execute(new Runnable() {
@@ -187,7 +178,7 @@ public class FTPClient {
                     ftpClient.retrieveFile(RemotePath, os);
                     requester.downloadFileCallback(file.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
-                    Log.e("FTP", e.toString());
+                    Log.e("FTPClient|downloadFile", e.toString());
                     return;
                 }
             }
@@ -215,7 +206,7 @@ public class FTPClient {
                     ftpClient.storeFile(RemotePath, is);
                     requester.uploadFileCallback(localPath.getAbsolutePath(), RemotePath);
                 }catch(Exception e){
-                    Log.e("FTPUpload", e.toString());
+                    Log.e("FTPClient|uploadFile", e.toString());
                     return;
                 }
             }
@@ -236,13 +227,13 @@ public class FTPClient {
             }
         }
         if(syncing){
-            Log.d("FTPClient", "A sync is already in progress!");
+            Log.e("FTPClient|INFO", "A sync is already in progress!");
             return;
         }
         AsyncTask.execute(new Runnable() {
             @Override
             public void run(){
-                Log.i("Connection", "Starting SYNC");
+                Log.i("FTPClient|INFO", "Starting SYNC");
                 requester.updateSyncBar("^checking for differences...", 0, activity);
                 int currentProgress = 0;
                 int maxUpProgress = 0;
@@ -256,8 +247,13 @@ public class FTPClient {
                 int Downloaded = 0;
                 int Unchanged = 0;
                 localNames = getLocalDir();
-                try{ remoteNames = getRemoteDir("/", "", 0); }catch(Exception e){Log.d("FTPClient", "Failed to get remote file listing"); return;}
-                Log.d("FTPSync", localPath.toString());
+                try{
+                    remoteNames = getRemoteDir("/", "", 0);
+                }catch(Exception e) {
+                    Log.e("FTPClient|sync", "Failed to get remote file listing");
+                    return;
+                }
+                Log.i("FTPClient|INFO", localPath.toString());
                 try {
                     for (String remoteName : remoteNames) {
                         if (!localNames.contains(remoteName))
@@ -272,10 +268,8 @@ public class FTPClient {
                     maxDownProgress = filesToDownload.size();
                     maxUpProgress = filesToUpload.size();
                     for (String fileToDownload : filesToDownload) {
-                        Log.d("FTPSync", fileToDownload);
+                        Log.i("FTPClient|syncDownload", fileToDownload);
                         String newFile = fileToDownload;
-                        checkFilepath(Environment.getExternalStorageDirectory() + "/frc2706");
-                        OutputStream File = new FileOutputStream(Environment.getExternalStorageDirectory() + "/frc2706" + newFile);
                         downloadSync(fileToDownload);
                         changed += 1;
                         Downloaded += 1;
@@ -286,10 +280,8 @@ public class FTPClient {
                     }
                     currentProgress = 0;
                     for (String fileToUpload : filesToUpload) {
-                        Log.d("FTPSync", fileToUpload);
+                        Log.i("FTPClient|syncUpload", fileToUpload);
                         String newFile = fileToUpload;
-                        checkFilepath(fileToUpload);
-                        InputStream File = new FileInputStream(newFile);
                         uploadSync(fileToUpload);
                         changed += 1;
                         Uploaded += 1;
@@ -300,7 +292,7 @@ public class FTPClient {
                     requester.syncCallback(changed);
 
                 }catch(Exception e){
-                    Log.e("FTPSync", e.toString());
+                    Log.e("FTPClient|sync", e.toString());
                     changed = -1;
                 }
                 String up = String.valueOf(Uploaded);
@@ -313,32 +305,32 @@ public class FTPClient {
                         requester.updateSyncBar("Error while syncing, see debug for more info.", 100, activity);
                 else
                     requester.updateSyncBar("Done syncing! Unchanged Files: "+Unchanged+"\n"+down+" downloaded, "+up+" uploaded.", 100, activity);
-                Log.d("FTPSync", "Sync done!");
+                Log.d("FTPClient|INFO", "Sync done!");
 
             }
         });
     }
     private void uploadSync(String filename){
         final String RemotePath = filename.split("frc2706")[1];
-        Log.d("UploadSync", RemotePath);
+        Log.i("FTPClient|INFO", RemotePath);
         try {
+            checkFilepath(filename, true);
             InputStream is = new FileInputStream(filename);
             ftpClient.storeFile(RemotePath, is);
         }catch(Exception e) {
-            Log.e("FTPUpload", e.toString());
+            Log.e("FTPClient|uploadSync", e.toString());
             return;
         }
     }
     private void downloadSync(String filename){
         File file = new File(Environment.getExternalStorageDirectory() + "/frc2706" + filename);
-        file.mkdirs();
-
         String RemotePath = filename;
         try {
+            checkFilepath(filename, false);
             OutputStream os = new FileOutputStream(file.getAbsolutePath());
             ftpClient.retrieveFile(RemotePath, os);
         }catch(Exception e){
-            Log.e("FTP", e.toString());
+            Log.e("FTPClient|downloadSync", e.toString());
             return;
         }
     }
@@ -347,7 +339,7 @@ public class FTPClient {
     /**
      * WARNING!!!
      * Everything below this is still being
-     * created and it doesn't work.
+     * created and it may not work.
      * don't use it.
 
 
@@ -367,7 +359,7 @@ public class FTPClient {
     */
 
     /**
-     * The public function for getting the filenames of files inside
+     * Method for retrieving an array of files on the local device.
      * @return
      */
     public ArrayList<String> getLocalDir(){
@@ -420,26 +412,39 @@ public class FTPClient {
                     filenames.addAll(getRemoteDir(dirToList, currentFileName, level + 1));
                 } else {
                     filenames.add(ftpClient.printWorkingDirectory() + "/" + aFile.getName());
-                    Log.d("FTPClient", ftpClient.printWorkingDirectory() +  "/" + aFile.getName());
+                    Log.i("FTPClient|INFO", ftpClient.printWorkingDirectory() +  "/" + aFile.getName());
                 }
             }
         }
         return filenames;
     }
-    private void checkFilepath(String filename){
-        File file = new File(filename);
-        String currentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String[] Levels = filename.split("/");
-        int level = 0;
-        int bottomlevel = Levels.length - 1;
-        while(level<bottomlevel){
-            File directory = new File(currentPath);
-            if(!directory.isDirectory()){
-                directory.delete();
-                directory.mkdir();
+    private boolean checkFilepath(String filename, boolean isFTP){
+        if(isFTP){
+            ArrayList<String> directorys = new ArrayList<>();
+            filename = filename.split("frc2706")[1];
+            String[] filenames = filename.split("/");
+            for(String file : filenames){
+                directorys.add(file);
             }
-            currentPath += "/" + Levels[level];
-            level++;
+            directorys.remove(directorys.size()-1);
+            String parentDir = "";
+            for(String dir : directorys){
+                parentDir += "/" + dir;
+            }
+            try{
+                return ftpClient.makeDirectory(parentDir);
+            }catch(Exception e){
+                Log.e("FTPClient|checkFilePath", e.toString());
+            }
+            return false;
+        }else {
+            File file = new File(Environment.getExternalStorageDirectory() + "/frc2706" + filename);
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                return parentDir.mkdirs();
+            } else {
+                return true;
+            }
         }
     }
 }
