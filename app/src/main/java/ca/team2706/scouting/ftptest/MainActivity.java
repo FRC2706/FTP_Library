@@ -27,7 +27,7 @@ import java.security.Permission;
 public class MainActivity extends AppCompatActivity implements FTPRequester {
 
     //FTPClient object
-    FTPClient ftpclient = new FTPClient("ftp.team2706.ca", "scout", "2706IsWatching!", Environment.getExternalStorageDirectory() + "/frc2706/files");
+    FTPClient ftpclient = new FTPClient("ftp.team2706.ca", "scout", "2706IsWatching!", "/frc2706");
 
 
     @Override
@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements FTPRequester {
             //Try to connect
             ftpclient.connect();
             if (ftpclient.isConnected()) {
-                //get a directory listing to enter PASV mode
-                ftpclient.dir(this);
+                //really do nothing because the rest is started when the button is clcked.
             } else {
                 //FTPClient didn't connect.
                 Log.d("FTPClient", "Failed to connect, cannot DIR.");

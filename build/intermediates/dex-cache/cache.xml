@@ -3,174 +3,174 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_4b46593070c26b810dd945a228ef27ff530bc39b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\libs\commons-net-examples-3.5.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="6272d80e897347c3c5f3691c8d76eae5deb764e1">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-net-examples-3.5_1143fefae0c3f0c1435611b1ff11508b3a6d4355\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_244748b8ac7e7582aa5c424faa0d1cb785dd9aca\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_9ad12ff1320f9a79114758267c6db7b7f4e0ccbb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_ab51fff2e2ff378cfeb5ddf553f88b811c67ffa6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_7ac5c13a5963d382e980c9dc83bec36cef6fd2ee\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="31b5ec8d47f5255a2be2e408b31ac67d8686b953">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_4ec7768015a9bc84f1283d035b098fcc427eb3a1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="f3f0e98858d8c011979663077600aed1c9e3393e">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_320b55c3ea840df179adb5d68b2e0fa2c90356d8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_1110f063bb7973ad0b0dc5d1b7bef764eb5b3820\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_b2ad7962c310d61b9bd57a8e4db9dc716c7d19f9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_e15eb761bbc6e803789e63e32b12f783aa274b1a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_c6f49a7764862023f8cc24936e8d20393e60f1a8\classes.dex" />
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_f9876e7a332db6036d5c11347acd262942eaf8b1\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_f4d4b48bd28c08178b02a9a42bee7b591891c96e\classes.dex" />
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_c1215081145802f542e3fc335c0c90ff56be02e6\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_f10431da65895eb6fc67ff74b979d92076e248a2\classes.dex" />
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_8ff6089dc9d4abe82a8700130f479d133326e98b\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_8586e8b175995a10a6aa2e3a0310de489c351b34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_6c51c69ec0ab20b638f3e5dd78b84087574ef674\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_31e5682cd7ce5ea969da8ef535faa3d8c7c6e6c4\classes.dex" />
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_67f7c3df08702537d2114b9c8e8395288765f366\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_19e1e2778c5975fc8572a30dd4f00c40c582f68d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_5e1e6835e21690ce975b46c18cb3dbab8d522002\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_c3972379e8a37242a3cf36d657888ebfa671770b\classes.dex" />
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_5bb44877c3779b626d15618f4ee9542822659cbb\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jar="C:\Users\Merge\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_a41ad4d66d0997cbb499f610b985342662ca497d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_00ee4f3f46c5325833659837e571dfd76cc9eb2f\classes.dex" />
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_90c2554a2ec72ca0dbd6d58c3ad054a2cbd5f366\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\libs\commons-net-3.5.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\libs\commons-net-examples-3.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="6272d80e897347c3c5f3691c8d76eae5deb764e1">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-net-examples-3.5_4dca364011f67dace405bc8fd5fa1fc44a0993fd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="319b89876730353840cc20b9a3564592773d0424">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_a29088c0dcc5d0774c884b758cfbb42167a6a6ca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\libs\commons-net-3.5.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="342fc284019f590e1308056990fdb24a08f06318">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-net-3.5_5409c50f9ce3064f9ec59b1b5d299f77e70655cc\classes.dex" />
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-net-3.5_be19c4fd5af7fcbc4552e03b5345dbea8076feda\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_d41d78a3a2f49f4c5bdbbe3bdbd5f0673a4c34f1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_93da8f523be08df9e2a635798bb40dba277f44de\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_51e9b0748ee84ea23c663cd2f0d5202e633c5a14\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="C:\Users\nrgil\OneDrive\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_8a76361dac2384198ae2117bfea64cfc61e4ffd0\classes.dex" />
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_740eab0f357bbfa6783b5dfa4dfc1a02443430e5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="5e5566305451b050b0cd1a517c05dd66d25a3b10">
+        <dex dex="C:\Users\Merge\Documents\GitHub\FTP_Library\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_aaafa5c4362a9f96b1943a4a13be6108a463495e\classes.dex" />
     </item>
 
 </items>
