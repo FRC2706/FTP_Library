@@ -251,16 +251,21 @@ public class FTPClient {
                     remoteNames = getRemoteDir("/", "", 0);
                 }catch(Exception e) {
                     Log.e("FTPClient|sync", "Failed to get remote file listing");
+                    requester.updateSyncBar("Error while syncing, see debug for more info.", 100, activity);
+                    syncing = false;
                     return;
                 }
-                Log.i("FTPClient|INFO", localPath.toString());
+                Log.i("FTPClient|INFO", "Local Path: " + localPath.toString() + "/");
                 try {
                     for (String remoteName : remoteNames) {
-                        if (!localNames.contains(remoteName))
+                        String usableName = localPath.getAbsolutePath() + remoteName;
+                        if (!localNames.contains(usableName))
                             filesToDownload.add(remoteName);
                     }
                     for (String localName : localNames) {
-                        if (!remoteNames.contains(localName))
+                        String usableName = localName.split(localPath.getAbsolutePath())[1];
+                        if(localName==localPath.getAbsolutePath()) continue;
+                        if (!remoteNames.contains(usableName))
                             filesToUpload.add(localName);
                         else
                             Unchanged += 1;
@@ -268,19 +273,16 @@ public class FTPClient {
                     maxDownProgress = filesToDownload.size();
                     maxUpProgress = filesToUpload.size();
                     for (String fileToDownload : filesToDownload) {
-                        Log.i("FTPClient|syncDownload", fileToDownload);
                         String newFile = fileToDownload;
                         downloadSync(fileToDownload);
                         changed += 1;
                         Downloaded += 1;
                         currentProgress += 1;
-                        //String display = newFile.split("frc2706")[1];
                         String display = "test";
                         requester.updateSyncBar("Downloading file " + currentProgress + "/" + maxDownProgress + ":\n" + display, (currentProgress*100) / maxDownProgress, activity);
                     }
                     currentProgress = 0;
                     for (String fileToUpload : filesToUpload) {
-                        Log.i("FTPClient|syncUpload", fileToUpload);
                         String newFile = fileToUpload;
                         uploadSync(fileToUpload);
                         changed += 1;
@@ -311,8 +313,8 @@ public class FTPClient {
         });
     }
     private void uploadSync(String filename){
-        final String RemotePath = filename.split("frc2706")[1];
-        Log.i("FTPClient|INFO", RemotePath);
+        String RemotePath = filename.split(localPath.getAbsolutePath())[1];
+        Log.i("FTPClient|uploadSync", "\nUploading: " + filename + "\nTo: " + RemotePath);
         try {
             checkFilepath(filename, true);
             InputStream is = new FileInputStream(filename);
@@ -322,12 +324,13 @@ public class FTPClient {
             return;
         }
     }
-    private void downloadSync(String filename){
-        File file = new File(Environment.getExternalStorageDirectory() + "/frc2706" + filename);
-        String RemotePath = filename;
+    private void downloadSync(String RemotePath){
+        String filename = localPath.getAbsolutePath() + RemotePath;
+        Log.i("FTPClient|downloadSync", "\nDownloading: " + RemotePath + "\nTo: " + filename);
         try {
-            checkFilepath(filename, false);
-            OutputStream os = new FileOutputStream(file.getAbsolutePath());
+            boolean temp = checkFilepath(filename, false);
+            Log.d("FTPClient|CreatedDir?", String.valueOf(temp));
+            OutputStream os = new FileOutputStream(localPath.getAbsolutePath() + RemotePath);
             ftpClient.retrieveFile(RemotePath, os);
         }catch(Exception e){
             Log.e("FTPClient|downloadSync", e.toString());
@@ -372,7 +375,7 @@ public class FTPClient {
             if(file.isDirectory()){
                 filenames.addAll(localDirSlave(file.getAbsolutePath()));
             }else{
-                filenames.add(file.getAbsolutePath());
+                    filenames.add(file.getAbsolutePath());
             }
         }
         return filenames;
@@ -384,7 +387,7 @@ public class FTPClient {
             if(file.isDirectory()){
                 filenames.addAll(localDirSlave(file.getAbsolutePath()));
             }else{
-                filenames.add(file.getAbsolutePath());
+                    filenames.add(file.getAbsolutePath());
             }
         }
         return filenames;
@@ -400,9 +403,7 @@ public class FTPClient {
         if (subFiles != null && subFiles.length > 0) {
             for (FTPFile aFile : subFiles) {
                 String currentFileName = aFile.getName();
-                if (currentFileName.equals(".")
-                        || currentFileName.equals("..")) {
-                    // skip parent directory and directory itself
+                if (currentFileName.equals(".") || currentFileName.equals("..")) {
                     continue;
                 }
                 for (int i = 0; i < level; i++) {
@@ -412,7 +413,6 @@ public class FTPClient {
                     filenames.addAll(getRemoteDir(dirToList, currentFileName, level + 1));
                 } else {
                     filenames.add(ftpClient.printWorkingDirectory() + "/" + aFile.getName());
-                    Log.i("FTPClient|INFO", ftpClient.printWorkingDirectory() +  "/" + aFile.getName());
                 }
             }
         }
@@ -438,7 +438,7 @@ public class FTPClient {
             }
             return false;
         }else {
-            File file = new File(Environment.getExternalStorageDirectory() + "/frc2706" + filename);
+            File file = new File(Environment.getExternalStorageDirectory() + localPath.getAbsolutePath() + filename);
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
                 return parentDir.mkdirs();
