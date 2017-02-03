@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements FTPRequester {
                     tv.setText("Scanning for differences...");
                 }else{
                     pb.setIndeterminate(false);
-                    Log.d("ProgressBarValue", String.valueOf(Progress));
                     pb.setProgress(Progress);
                     tv.setText(Caption);
                 }

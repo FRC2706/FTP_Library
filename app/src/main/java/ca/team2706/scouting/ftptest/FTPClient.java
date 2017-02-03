@@ -326,11 +326,11 @@ public class FTPClient {
     }
     private void downloadSync(String RemotePath){
         String filename = localPath.getAbsolutePath() + RemotePath;
-        Log.i("FTPClient|downloadSync", "\nDownloading: " + RemotePath + "\nTo: " + filename);
+        Log.i("FTPClient|downloadSync", "Downloading: " + RemotePath + "\nTo: " + filename);
         try {
-            boolean temp = checkFilepath(filename, false);
-            Log.d("FTPClient|CreatedDir?", String.valueOf(temp));
-            OutputStream os = new FileOutputStream(localPath.getAbsolutePath() + RemotePath);
+            String temp = checkFilepath(filename, false);
+            Log.d("FTPClient|CreatedDir?", temp);
+            OutputStream os = new FileOutputStream(filename);
             ftpClient.retrieveFile(RemotePath, os);
         }catch(Exception e){
             Log.e("FTPClient|downloadSync", e.toString());
@@ -338,33 +338,6 @@ public class FTPClient {
         }
     }
 
-
-    /**
-     * WARNING!!!
-     * Everything below this is still being
-     * created and it may not work.
-     * don't use it.
-
-
-    public Boolean checkNetwork(){
-        final ConnectivityManager connMgr = (ConnectivityManager)
-                this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifi.isConnectedOrConnecting ()) {
-            return true;
-        } else if (mobile.isConnectedOrConnecting ()) {
-            return false;
-        } else {
-            return false;
-        }
-    }
-    */
-
-    /**
-     * Method for retrieving an array of files on the local device.
-     * @return
-     */
     public ArrayList<String> getLocalDir(){
         String topLevelPath = localPath.getAbsolutePath();
         ArrayList<String> filenames = new ArrayList<>();
@@ -375,6 +348,7 @@ public class FTPClient {
             if(file.isDirectory()){
                 filenames.addAll(localDirSlave(file.getAbsolutePath()));
             }else{
+                if(!filenames.contains(file.getAbsolutePath()))
                     filenames.add(file.getAbsolutePath());
             }
         }
@@ -387,6 +361,7 @@ public class FTPClient {
             if(file.isDirectory()){
                 filenames.addAll(localDirSlave(file.getAbsolutePath()));
             }else{
+                if(!filenames.contains(file.getAbsolutePath()))
                     filenames.add(file.getAbsolutePath());
             }
         }
@@ -412,13 +387,15 @@ public class FTPClient {
                 if (aFile.isDirectory()) {
                     filenames.addAll(getRemoteDir(dirToList, currentFileName, level + 1));
                 } else {
-                    filenames.add(ftpClient.printWorkingDirectory() + "/" + aFile.getName());
+                    String nameToAdd = ftpClient.printWorkingDirectory() + "/" + aFile.getName();
+                    if(!filenames.contains(nameToAdd))
+                    filenames.add(nameToAdd);
                 }
             }
         }
         return filenames;
     }
-    private boolean checkFilepath(String filename, boolean isFTP){
+    private String checkFilepath(String filename, boolean isFTP){
         if(isFTP){
             ArrayList<String> directorys = new ArrayList<>();
             filename = filename.split("frc2706")[1];
@@ -432,18 +409,19 @@ public class FTPClient {
                 parentDir += "/" + dir;
             }
             try{
-                return ftpClient.makeDirectory(parentDir);
+                return ftpClient.makeDirectory(parentDir) ? "ftpGood" : "ftpFail";
             }catch(Exception e){
                 Log.e("FTPClient|checkFilePath", e.toString());
             }
-            return false;
+            return "ftpFail";
         }else {
-            File file = new File(Environment.getExternalStorageDirectory() + localPath.getAbsolutePath() + filename);
+            File file = new File(filename);
+            Log.d("FTPClient|checkFilePath", "checking for parent of: " + file.getAbsolutePath());
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
-                return parentDir.mkdirs();
+                return parentDir.mkdirs() ? "localGood": "localFail";
             } else {
-                return true;
+                return "localAlreadyExists";
             }
         }
     }
